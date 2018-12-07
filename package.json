@@ -1,0 +1,43 @@
+{
+  "name": "SF",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "^3.6.1",
+    "compression": "^1.7.3",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "hbs": "~4.0.1",
+    "helmet": "^3.15.0",
+    "http-errors": "~1.6.2",
+    "ldapjs": "^1.0.2",
+    "morgan": "~1.9.0",
+    "mssql": "^4.3.0",
+    "next": "^7.0.2",
+    "node-addon-api": "^1.6.2",
+    "parse-dashboard": "^1.2.0",
+    "parse-server": "^3.1.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "jss": "latest",
+    "prop-types": "latest",
+    "csso": "latest",
+    "react-jss": "latest",
+    "parse": "latest",
+    "axios": "latest",
+    "react-chartkick": "latest",
+    "chart.js": "latest",
+    "lodash": "latest"
+  },
+  "devDependencies": {
+    "node-gyp": "^3.8.0"
+  }
+}
