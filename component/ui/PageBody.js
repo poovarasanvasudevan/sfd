@@ -13,36 +13,88 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Icon from '@material-ui/core/Icon'
 import {Parse} from 'parse'
 import axios from 'axios'
+import classNames from 'classnames';
 
-const drawerWidth = 280
+import Link from 'next/link'
+
+
+const drawerWidth = 240
 
 const styles = theme => ({
-    root: {
-        display: 'flex',
-    },
+
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginLeft: 12,
+        marginRight: 36,
+    },
+    hide: {
+        display: 'none',
     },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
+        whiteSpace: 'nowrap',
     },
+    drawerOpen: {
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerClose: {
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing.unit * 7 + 1,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing.unit * 9 + 1,
+        },
+    },
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+    },
+
+    root: {
+        display: 'flex',
+    },
+
     drawerPaper: {
         width: drawerWidth,
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing.unit,
     },
     nested: {
         paddingLeft: theme.spacing.unit * 8,
-    },
-    toolbar: theme.mixins.toolbar,
+    }
 })
 
 
 class PageBody extends React.Component {
     state = {
+        dOpen : true,
         open: false,
         schemaopen: false,
         schema : [{
@@ -50,9 +102,18 @@ class PageBody extends React.Component {
         }]
     };
 
+    handleDrawer = () => {
+        this.setState(state => ({ dOpen: !state.dOpen }));
+        localStorage.setItem("sidebar" , !this.state.dOpen)
+    };
+
+
+
     async componentDidMount() {
         Parse.serverURL = "http://localhost:3000/parse";
         Parse.initialize('myAppId', 'jskey', 'myMasterKey');
+
+        this.setState(state => ({ dOpen: localStorage.getItem("sidebar") == null ? true : (localStorage.getItem("sidebar") == "true" ? true : false) }));
 
         // const ratings = await Parse.Cloud.run("allCount", {});
         // console.log(ratings)
@@ -80,10 +141,17 @@ class PageBody extends React.Component {
         this.setState({schemaopen : !schemaopen});
     };
 
+
     dropDownList = [
         {
+            text: 'Dashboard',
+            icon: 'home',
+            href: '/'
+        },
+        {
             text: 'Schemas',
-            icon: 'storage'
+            icon: 'storage',
+            href: '/schema'
         }, {
             text: "Jobs",
             icon: "alarm",
@@ -97,13 +165,22 @@ class PageBody extends React.Component {
             icon: "settings"
         },
         {
+            text: "Calendar",
+            icon: "calendar_today"
+        },
+        {
+            text: "Flow Editor",
+            icon: "graphic_eq"
+        },
+        {
             text: "Logs",
             icon: "notes"
         },
         {
             text: "Webhooks",
             icon: "web"
-        }, {
+        },
+        {
             text: "Push Services",
             icon: "notifications"
         }
@@ -117,26 +194,34 @@ class PageBody extends React.Component {
         return (
             <div className={classes.root}>
                 <CssBaseline/>
-                <Toolbar/>
+                <Toolbar menuAction={this.handleDrawer}/>
                 <Drawer
                     elevation={16}
-                    className={classes.drawer}
                     variant="permanent"
+                    className={classNames(classes.drawer, {
+                        [classes.drawerOpen]: this.state.dOpen,
+                        [classes.drawerClose]: !this.state.dOpen,
+                    })}
                     classes={{
-                        paper: classes.drawerPaper,
+                        paper: classNames({
+                            [classes.drawerOpen]: this.state.dOpen,
+                            [classes.drawerClose]: !this.state.dOpen,
+                        }),
                     }}
+                    open={this.state.dOpen}
                 >
                     <div className={classes.toolbar}/>
                     <List dense={true}>
                         {this.dropDownList.map((dItem, index) => {
                             if (dItem.children == null) {
-                                return (<ListItem button key={dItem.text}>
+                                return (<Link href={dItem.href == null ? '#' : dItem.href}><ListItem button key={dItem.text}>
                                     <ListItemIcon><Icon>{dItem.icon}</Icon></ListItemIcon>
                                     <ListItemText primary={dItem.text}/>
-                                </ListItem>)
+                                </ListItem></Link>)
                             } else {
                                 return (
                                     <React.Fragment>
+
                                         <ListItem button key={dItem.text}  onClick={this.handleClick}>
                                             <ListItemIcon><Icon>{dItem.icon}</Icon></ListItemIcon>
                                             <ListItemText primary={dItem.text}/>

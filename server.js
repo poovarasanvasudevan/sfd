@@ -20,11 +20,10 @@ nxt.prepare()
         const app = express()
         app.use(logger('dev'));
         app.use(compression())
-        // app.use(helmet())
+        app.use(helmet())
         // app.use(express.json());
         // app.use(express.urlencoded({ extended: false }));
-        // app.use(cookieParser());
-
+        app.use(cookieParser());
         var api = new ParseServer({
             databaseURI: 'mongodb://localhost:27017/devserver', // Connection string for your MongoDB database
             cloud: 'cloud/main.js', // Absolute path to your Cloud Code
@@ -55,9 +54,11 @@ nxt.prepare()
         app.get('*', (req, res) => {
             return handle(req, res)
         })
+        // var server = http.createServer(app);
+        // deepstream.set( 'httpServer', server );
+        // deepstream.start();
 
-        app.listen(port, (err) => {
-            if (err) throw err
+        app.listen( port, function(){
             console.log(`> Ready on http://localhost:${port}`)
-        })
+        });
     })

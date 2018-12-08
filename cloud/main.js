@@ -2,7 +2,7 @@ const BASEURL = "http://10.165.125.177:8443/ctsspi"
 const LOGIN_URL = BASEURL + "/oauth/token"
 const {poolPromise} = require('../core/database')
 const queries = require('./api/queries')
-
+const {mongo , db} = require('../core/mongo')
 
 async function createUser(username, password) {
     var user = new Parse.User()
@@ -31,6 +31,12 @@ function createOrUpdateUser(username, password) {
         return (user) ? updateUser(user, password) : createUser(username, password)
     })
 }
+
+
+
+Parse.Cloud.define('dbStats' , async (request) => {
+    return await db.db.stats()
+})
 
 
 Parse.Cloud.define("allCount", async (request) => {

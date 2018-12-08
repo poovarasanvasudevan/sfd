@@ -1,16 +1,22 @@
 import { SheetsRegistry } from 'jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
+import pTheme from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 
+
+const toolbarHeights = {
+    mobilePortrait: 56,
+    mobileLandscape: 48,
+    tabletDesktop: 56,
+};
 // A theme with custom primary and secondary color.
 // It's optional.
-const theme = createMuiTheme({
+var theme = createMuiTheme({
     palette: {
         primary: {
-            light: indigo[300],
-            main: indigo[500],
-            dark: indigo[700],
+            light: pTheme[300],
+            main: pTheme[500],
+            dark: pTheme[700],
         },
         secondary: {
             light: pink[300],
@@ -22,6 +28,7 @@ const theme = createMuiTheme({
         useNextVariants: true,
     }
 });
+
 
 function createPageContext() {
     return {

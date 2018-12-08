@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean"
   },
   "keywords": [],
   "author": "",
@@ -35,7 +37,11 @@
     "axios": "latest",
     "react-chartkick": "latest",
     "chart.js": "latest",
-    "lodash": "latest"
+    "lodash": "latest",
+    "mongoose": "latest",
+    "react-grid-layout": "latest",
+    "classnames": "latest",
+    "react-table": "latest"
   },
   "devDependencies": {
     "node-gyp": "^3.8.0"

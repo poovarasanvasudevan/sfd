@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
+import Badge from '@material-ui/core/Badge'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import {fade} from '@material-ui/core/styles/colorManipulator'
@@ -78,8 +79,11 @@ function SearchAppBar(props) {
     const {classes} = props
     return (
         <AppBar position="fixed" elevation={1} className={classes.root}>
-            <Toolbar>
-                <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+            <Toolbar style={{minHeight:"56px"}}>
+                <IconButton className={classes.menuButton}
+                            color="inherit"
+                            onClick={props.menuAction}
+                            aria-label="Open drawer">
                     <Icon>menu</Icon>
                 </IconButton>
                 <Typography className={classes.title} variant="h6" color="inherit" noWrap>

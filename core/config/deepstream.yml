@@ -1,0 +1,9 @@
+connectionEndpoints:
+  websocket:
+    name: uws
+
+logger:
+  name: default
+  options:
+    colors: true
+    logLevel: INFO

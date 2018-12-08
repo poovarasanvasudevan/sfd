@@ -23,6 +23,9 @@ class MyDocument extends Document {
                     rel="stylesheet"
                     href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
                 />
+                <link
+                    rel="stylesheet"
+                    href="/static/css/all.min.css" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             </Head>
             <body>

@@ -12,10 +12,11 @@ export default {
         return instance;
     },
 
-    count : function (schema,callback) {
-        instance.get("/classes/" + schema)
-            .then((data) => {
-                callback(data.count)
-            })
+    runFunction : async function(funName , params) {
+        return await instance.post("/functions/" + funName , params)
+    },
+
+    count : async function (schema) {
+        return await instance.get("/classes/" + schema + "?limit=0&count=1");
     }
 }

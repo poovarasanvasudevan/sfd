@@ -1,9 +1,15 @@
 /* cppsrc/main.cpp */
 #include <napi.h>
-#include "./api/test.h"
 
-Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
-  return test::Init(env, exports);
+Napi::String Method(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  return Napi::String::New(env, "world");
 }
 
-NODE_API_MODULE(testaddon, InitAll)
+Napi::Object Init(Napi::Env env, Napi::Object exports) {
+  exports.Set(Napi::String::New(env, "hello"),
+              Napi::Function::New(env, Method));
+  return exports;
+}
+
+NODE_API_MODULE(hello, Init)
