@@ -115,6 +115,11 @@ class PageBody extends React.Component {
 
         this.setState(state => ({ dOpen: localStorage.getItem("sidebar") == null ? true : (localStorage.getItem("sidebar") == "true" ? true : false) }));
 
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/static/js/sw.js');
+            });
+        }
         // const ratings = await Parse.Cloud.run("allCount", {});
         // console.log(ratings)
         //
@@ -137,10 +142,10 @@ class PageBody extends React.Component {
     }
 
 
-    handleSchema = (schemaopen) => {
-        this.setState({schemaopen : !schemaopen});
-    };
 
+    handleCollapse = (e) => {
+        this.setState({ [e]: !this.state[e] });
+    };
 
     dropDownList = [
         {
@@ -156,9 +161,18 @@ class PageBody extends React.Component {
             text: "Jobs",
             icon: "alarm",
             children: [
-                "All Jobs",
-                "Scheduled Jobs",
-                "Job Status"
+                {
+                    text : "All Jobs"
+                },
+                {
+                    text : "Scheduled Jobs"
+                },
+                {
+                    text : "Job Status"
+                },
+                {
+                    text : "Job Queue"
+                }
             ]
         }, {
             text: "Config",
@@ -172,6 +186,11 @@ class PageBody extends React.Component {
             text: "Flow Editor",
             icon: "graphic_eq"
         },
+        {
+            text: "Applications",
+            icon: "table_chart"
+        },
+
         {
             text: "Logs",
             icon: "notes"
@@ -211,7 +230,7 @@ class PageBody extends React.Component {
                     open={this.state.dOpen}
                 >
                     <div className={classes.toolbar}/>
-                    <List dense={true}>
+                    <List dense={true} disablePadding>
                         {this.dropDownList.map((dItem, index) => {
                             if (dItem.children == null) {
                                 return (<Link href={dItem.href == null ? '#' : dItem.href}><ListItem button key={dItem.text}>
@@ -221,19 +240,18 @@ class PageBody extends React.Component {
                             } else {
                                 return (
                                     <React.Fragment>
-
-                                        <ListItem button key={dItem.text}  onClick={this.handleClick}>
+                                        <ListItem disablePadding button key={dItem.text} onClick={this.handleCollapse.bind(this, dItem.text)}>
                                             <ListItemIcon><Icon>{dItem.icon}</Icon></ListItemIcon>
                                             <ListItemText primary={dItem.text}/>
+                                            {/*{this.state[dItem.text] ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}*/}
                                         </ListItem>
-                                        <Collapse key="collapser"   in={this.state.open} timeout="auto" unmountOnExit>
+                                        <Collapse key="collapser" in={this.state[dItem.text]} timeout="auto" unmountOnExit>
                                             <List dense={true} component="div" disablePadding>
                                                 {dItem.children.map((i, a) => (
-                                                    <ListItem button className={classes.nested} key={i}>
-                                                        <ListItemText>{i}</ListItemText>
+                                                    <ListItem button className={classes.nested} key={i.text}>
+                                                        <ListItemText>{i.text}</ListItemText>
                                                     </ListItem>
                                                 ))}
-
                                             </List>
                                         </Collapse>
                                     </React.Fragment>

@@ -41,7 +41,10 @@
     "mongoose": "latest",
     "react-grid-layout": "latest",
     "classnames": "latest",
-    "react-table": "latest"
+    "agenda": "latest",
+    "node-where": "latest",
+    "react-table": "latest",
+    "sw-precache-webpack-plugin": "latest"
   },
   "devDependencies": {
     "node-gyp": "^3.8.0"

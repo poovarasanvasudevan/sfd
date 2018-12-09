@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/devserver');
+var Config = require('./Config');
+mongoose.connect(Config.MONGO_DB);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

@@ -25,7 +25,7 @@ class MyApp extends App {
         return (
             <Container>
                 <Head>
-                    <title>My page</title>
+                    <title>Service Focus | Dashboard</title>
                 </Head>
                 {/* Wrap every page in Jss and Theme providers */}
                 <JssProvider
