@@ -5,6 +5,15 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import Context from '../component/context/Context';
+import Router from 'next/router'
+
+// Router.events.on('routeChangeStart', (url) => {
+//     NProgress.start()
+// })
+// Router.events.on('routeChangeComplete', () => NProgress.done())
+// Router.events.on('routeChangeError', () => NProgress.done())
+//
+
 
 class MyApp extends App {
     constructor(props) {

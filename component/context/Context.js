@@ -26,6 +26,7 @@ var theme = createMuiTheme({
         },
     },
     typography: {
+        fontFamily: "Product Sans",
         useNextVariants: true,
     }
 });
