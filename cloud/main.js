@@ -2,7 +2,8 @@ const BASEURL = "http://10.165.125.177:8443/ctsspi"
 const LOGIN_URL = BASEURL + "/oauth/token"
 const {poolPromise} = require('../core/database')
 const queries = require('./api/queries')
-const {mongo , db} = require('../core/mongo')
+//const {mongo , db , dbUtils} = require('../core/mongo')
+const {utils , pg} = require('../core/postgres')
 
 async function createUser(username, password) {
     var user = new Parse.User()
@@ -34,17 +35,14 @@ function createOrUpdateUser(username, password) {
 
 
 
-Parse.Cloud.define('dbStats' , async (request) => {
-    return await db.db.stats()
-})
-
-
 Parse.Cloud.define("allCount", async (request) => {
-    const schema = Parse.Object.extend("_SCHEMA")
-    var query = new Parse.Query(schema)
-    var result =  await query.find(null, {useMasterKey: true})
-    console.dir(result)
-    return "SSS"
+    const aObj =  await utils.runFunction("get_all_table_record_count" , []);
+    var retObj = [];
+
+    for(i=0;i<aObj.length;i++) {
+        retObj.push([aObj[i].tablename , aObj[i].datacount] )
+    }
+    return retObj;
 })
 
 
@@ -85,7 +83,6 @@ Parse.Cloud.job("NOTES_SYNC_JOB", async function (request, status) {
 })
 
 Parse.Cloud.job("LDAP_SYNC_JOB", async function (request, status) {
-
 
     const {params, headers, log, message} = request
     message("LDAP Accounts Sync Started")

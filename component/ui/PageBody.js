@@ -12,13 +12,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Icon from '@material-ui/core/Icon'
 import {Parse} from 'parse'
-import axios from 'axios'
-import classNames from 'classnames';
-
+import classNames from 'classnames'
+import BlockUi from 'react-block-ui'
 import Link from 'next/link'
-import { Scrollbars } from 'react-custom-scrollbars';
 
-const drawerWidth = 240
+const drawerWidth = 250
 
 const styles = theme => ({
 
@@ -94,58 +92,45 @@ const styles = theme => ({
 
 class PageBody extends React.Component {
     state = {
-        dOpen : true,
+        dOpen: true,
         open: false,
         schemaopen: false,
-        schema : [{
-            className : "LOading"
-        }]
-    };
+        schema: [{
+            className: "LOading"
+        }],
+        blocking: false,
+    }
 
     handleDrawer = () => {
-        this.setState(state => ({ dOpen: !state.dOpen }));
-        localStorage.setItem("sidebar" , !this.state.dOpen)
-    };
-
-
-
-    async componentDidMount() {
-        Parse.serverURL = "http://localhost:3000/parse";
-        Parse.initialize('myAppId', 'jskey', 'myMasterKey');
-
-        this.setState(state => ({ dOpen: localStorage.getItem("sidebar") == null ? true : (localStorage.getItem("sidebar") == "true" ? true : false) }));
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/static/js/sw.js');
-            });
-        }
-        // const ratings = await Parse.Cloud.run("allCount", {});
-        // console.log(ratings)
-        //
-
-        //
-
-        //
-
-
-        // var Schema = Parse.Object.extend("_SCHEMA");
-        // var query = new Parse.Query(Schema);
-        // query.useMasterKey = true;
-        // query.find({
-        //     success : (results) => {
-        //         console.log(JSON.stringify(results));
-        //     },
-        //     error : (err) => {
-        //         console.log("err : " + JSON.stringify(err));
-        //     }});
+        this.setState(state => ({dOpen: !state.dOpen}))
+        localStorage.setItem("sidebar", !this.state.dOpen)
     }
 
 
+    async componentDidMount() {
+        Parse.serverURL = "http://localhost:3000/parse"
+        Parse.initialize('myAppId', 'jskey', 'myMasterKey')
+
+        this.setState(state => ({dOpen: localStorage.getItem("sidebar") == null ? true : (localStorage.getItem("sidebar") === "true")}))
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/static/js/sw.js')
+            })
+        }
+    }
+
+    componentDidUpdate() {
+    }
 
     handleCollapse = (e) => {
-        this.setState({ [e]: !this.state[e] });
-    };
+        this.setState({[e]: !this.state[e]})
+    }
+
+
+    componentWillUnmount() {
+
+    }
 
     dropDownList = [
         {
@@ -160,20 +145,21 @@ class PageBody extends React.Component {
         }, {
             text: "Jobs",
             icon: "alarm",
-            children: [
-                {
-                    text : "All Jobs"
-                },
-                {
-                    text : "Scheduled Jobs"
-                },
-                {
-                    text : "Job Status"
-                },
-                {
-                    text : "Job Queue"
-                }
-            ]
+            href: '/jobs'
+            // children: [
+            //     {
+            //         text: "All Jobs"
+            //     },
+            //     {
+            //         text: "Scheduled Jobs"
+            //     },
+            //     {
+            //         text: "Job Status"
+            //     },
+            //     {
+            //         text: "Job Queue"
+            //     }
+            // ]
         }, {
             text: "Config",
             icon: "settings"
@@ -205,19 +191,17 @@ class PageBody extends React.Component {
         }
     ]
 
-
     render() {
 
         const {classes} = this.props
 
         return (
-            <div className={classes.root}>
+
+            <div className={classes.root} key="root">
                 <CssBaseline/>
-                <Toolbar menuAction={this.handleDrawer}/>
-                <Drawer
-                    elevation={16}
-                    variant="permanent"
-                    className={classNames(classes.drawer, {
+                <Toolbar key="tBar" menuAction={this.handleDrawer}/>
+                <Drawer key="drawer" elevation={16} variant="permanent"
+                        className={classNames(classes.drawer, {
                         [classes.drawerOpen]: this.state.dOpen,
                         [classes.drawerClose]: !this.state.dOpen,
                     })}
@@ -227,14 +211,14 @@ class PageBody extends React.Component {
                             [classes.drawerClose]: !this.state.dOpen,
                         }),
                     }}
-                    open={this.state.dOpen}
-                >
-                    <div className={classes.toolbar}/>
+                    open={this.state.dOpen}>
+
+                    <div className={classes.toolbar} />
                     <List dense={true} disablePadding>
                         {this.dropDownList.map((dItem, index) => {
                             if (dItem.children == null) {
                                 return (
-                                    <Link href={dItem.href == null ? '#' : dItem.href}>
+                                    <Link key={dItem.text + "_link"} href={dItem.href == null ? '#' : dItem.href}>
                                         <ListItem button key={dItem.text}>
                                             <ListItemIcon><Icon>{dItem.icon}</Icon></ListItemIcon>
                                             <ListItemText primary={dItem.text}/>
@@ -244,17 +228,21 @@ class PageBody extends React.Component {
                             } else {
                                 return (
                                     <React.Fragment>
-                                        <ListItem disablePadding button key={dItem.text} onClick={this.handleCollapse.bind(this, dItem.text)}>
-                                            <ListItemIcon><Icon>{dItem.icon}</Icon></ListItemIcon>
-                                            <ListItemText primary={dItem.text}/>
-                                            {/*{this.state[dItem.text] ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}*/}
-                                        </ListItem>
+                                        <Link key={dItem.text + "_link"} href={dItem.href == null ? '#' : dItem.href}>
+                                            <ListItem disablePadding button key={dItem.text} onClick={this.handleCollapse.bind(this, dItem.text)}>
+                                                <ListItemIcon><Icon>{dItem.icon}</Icon></ListItemIcon>
+                                                <ListItemText primary={dItem.text}/>
+                                                {/*{this.state[dItem.text] ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}*/}
+                                            </ListItem>
+                                        </Link>
                                         <Collapse key="collapser" in={this.state[dItem.text]} timeout="auto" unmountOnExit>
                                             <List dense={true} component="div" disablePadding>
                                                 {dItem.children.map((i, a) => (
-                                                    <ListItem button className={classes.nested} key={i.text}>
-                                                        <ListItemText>{i.text}</ListItemText>
-                                                    </ListItem>
+                                                    <Link key={i.text + "_link"} href={dItem.href == null ? '#' : dItem.href}>
+                                                        <ListItem button className={classes.nested} key={i.text}>
+                                                            <ListItemText>{i.text}</ListItemText>
+                                                        </ListItem>
+                                                    </Link>
                                                 ))}
                                             </List>
                                         </Collapse>

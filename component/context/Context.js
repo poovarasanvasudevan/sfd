@@ -14,9 +14,13 @@ const toolbarHeights = {
 var theme = createMuiTheme({
     palette: {
         primary: {
-            light: '#77aedd',
-            main: '#3d8bce',
-            dark: '#2f78c2',
+            light: pTheme[500],
+            main: pTheme[700],
+            dark: pTheme[900],
+
+            // light: '#77aedd',
+            // main: '#3d8bce',
+            // dark: '#2f78c2',
             contrastText: '#fff',
         },
         secondary: {

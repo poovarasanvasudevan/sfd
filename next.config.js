@@ -1,6 +1,11 @@
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-
-module.exports = {
+const withCSS = require('@zeit/next-css')
+module.exports = withCSS({
+    cssModules: true,
+    cssLoaderOptions: {
+        importLoaders: 1,
+        localIdentName: "[local]___[hash:base64:8]",
+    },
     webpack: (config) => {
         config.plugins.push(
             new SWPrecacheWebpackPlugin({
@@ -17,4 +22,4 @@ module.exports = {
 
         return config
     }
-};
+});

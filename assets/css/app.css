@@ -168,7 +168,7 @@ body {
     cursor: se-resize;
 }
 
-.layout div.cbLayout {
+.cbLayout {
     border: 1px solid #eaeaea;
     background: white;
 }

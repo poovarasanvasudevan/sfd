@@ -19,10 +19,7 @@ class MyDocument extends Document {
                 />
                 {/* PWA primary color */}
                 <meta name="theme-color" content={pageContext.theme.palette.primary.main}/>
-                <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-                />
+
                 <link rel="stylesheet" href="/static/css/app.css" />
                 <link rel="stylesheet" href="/static/css/all.min.css" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
