@@ -1,6 +1,6 @@
 import { SheetsRegistry } from 'jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
-import pTheme from '@material-ui/core/colors/blue';
+import pTheme from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 
 
@@ -14,13 +14,18 @@ const toolbarHeights = {
 var theme = createMuiTheme({
     palette: {
         primary: {
-            light: pTheme[500],
-            main: pTheme[700],
-            dark: pTheme[900],
+            // light: pTheme[300],
+            // main: pTheme[500],
+            // dark: pTheme[700],
 
-            // light: '#77aedd',
-            // main: '#3d8bce',
-            // dark: '#2f78c2',
+            light: '#77aedd',
+            main: '#3d8bce',
+            dark: '#2f78c2',
+
+            //
+            // light: '#ffffff',
+            // main: '#ffffff',
+            // dark: '#ffffff',
             contrastText: '#fff',
         },
         secondary: {
@@ -30,7 +35,7 @@ var theme = createMuiTheme({
         },
     },
     typography: {
-        fontFamily: "Product Sans",
+      //  fontFamily: "Product Sans",
         useNextVariants: true,
     }
 });

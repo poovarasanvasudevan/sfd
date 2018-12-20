@@ -8,15 +8,12 @@ import Context from '../component/context/Context'
 import Router from 'next/router'
 import MProvider from '../component/context/MProvider'
 
-// Router.events.on('routeChangeStart', (url) => {
-//     NProgress.start()
-// })
-// Router.events.on('routeChangeComplete', () => NProgress.done())
-// Router.events.on('routeChangeError', () => NProgress.done())
-//
-
 
 class MyApp extends App {
+
+    state= {
+        loading : true
+    }
 
     static async getInitialProps ({ Component, ctx }) {
         let pageProps = {}
@@ -46,8 +43,8 @@ class MyApp extends App {
     render() {
         const {Component, pageProps} = this.props
         return (
-            <Container>
 
+            <Container>
                 <Head>
                     <title>Service Focus | Dashboard</title>
                 </Head>
@@ -59,7 +56,6 @@ class MyApp extends App {
                         </MProvider>
                     </MuiThemeProvider>
                 </JssProvider>
-
             </Container>
         )
     }

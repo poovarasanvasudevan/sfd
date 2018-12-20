@@ -23,6 +23,8 @@ class MyDocument extends Document {
                 <link rel="stylesheet" href="/static/css/app.css" />
                 <link rel="stylesheet" href="/static/css/all.min.css" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+                <script src='/static/js/polyfills.js' />
             </Head>
             <body>
             <Main/>

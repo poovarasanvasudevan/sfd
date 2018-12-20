@@ -4,7 +4,7 @@ module.exports = withCSS({
     cssModules: true,
     cssLoaderOptions: {
         importLoaders: 1,
-        localIdentName: "[local]___[hash:base64:8]",
+        localIdentName: "[local]__[hash:base64:8]",
     },
     webpack: (config) => {
         config.plugins.push(

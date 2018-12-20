@@ -1,5 +1,6 @@
 import React from 'react'
 import PageLayout from "../component/ui/PageBody"
+import {withPage} from "../component/context/HOC"
 
 class Jobs extends React.Component {
 
@@ -11,11 +12,10 @@ class Jobs extends React.Component {
 
     render() {
         return (
-            <PageLayout>
+
                 <h1 className="padding0 margin0">Jobs</h1>
-            </PageLayout>
         )
     }
 }
 
-export default Jobs
+export default withPage(Jobs)

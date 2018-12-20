@@ -2,8 +2,8 @@ const BASEURL = "http://10.165.125.177:8443/ctsspi"
 const LOGIN_URL = BASEURL + "/oauth/token"
 const {poolPromise} = require('../core/database')
 const queries = require('./api/queries')
-//const {mongo , db , dbUtils} = require('../core/mongo')
-const {utils , pg} = require('../core/postgres')
+const {mongo, db, dbUtils} = require('../core/mongo')
+const {utils, pg} = require('../core/postgres')
 
 async function createUser(username, password) {
     var user = new Parse.User()
@@ -34,15 +34,12 @@ function createOrUpdateUser(username, password) {
 }
 
 
-
 Parse.Cloud.define("allCount", async (request) => {
-    const aObj =  await utils.runFunction("get_all_table_record_count" , []);
-    var retObj = [];
+    return await dbUtils.runFunction("getCountOfAllCollection()", [])
+})
 
-    for(i=0;i<aObj.length;i++) {
-        retObj.push([aObj[i].tablename , aObj[i].datacount] )
-    }
-    return retObj;
+Parse.Cloud.define("allSchemaStat", async (request) => {
+    return await dbUtils.runFunction("getCollectionsStat()", [])
 })
 
 
@@ -81,7 +78,6 @@ Parse.Cloud.job("NOTES_SYNC_JOB", async function (request, status) {
         return "FAILED"
     }
 })
-
 Parse.Cloud.job("LDAP_SYNC_JOB", async function (request, status) {
 
     const {params, headers, log, message} = request

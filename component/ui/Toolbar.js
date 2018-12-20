@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
-
+import Link from 'next/link'
 
 const styles = theme => ({
     root: {
@@ -37,6 +37,7 @@ const styles = theme => ({
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
         marginLeft: 0,
+        marginRight: 20,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing.unit,
@@ -79,16 +80,23 @@ function SearchAppBar(props) {
     const {classes} = props
     return (
         <AppBar position="fixed" elevation={1} className={classes.root}>
-            <Toolbar style={{minHeight:"56px"}}>
+            <Toolbar style={{minHeight:60}}>
                 <IconButton className={classes.menuButton}
                             color="inherit"
                             onClick={props.menuAction}
                             aria-label="Open drawer">
                     <Icon>menu</Icon>
                 </IconButton>
-                <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                <Typography variant="h6" color="inherit" className={classes.grow}>
                     Service Focus
                 </Typography>
+                {/*<div style={{backgroundColor: '#fff'}}>*/}
+                    {/*<Link href="/">*/}
+                        {/*<img*/}
+                            {/*src="https://services-staging.ctsmartdesk.com/ServiceFocus//Images/LogIn/logo_final.png"*/}
+                            {/*height={45}/>*/}
+                    {/*</Link>*/}
+                {/*</div>*/}
                 <div className={classes.grow}/>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -102,6 +110,18 @@ function SearchAppBar(props) {
                         }}
                     />
                 </div>
+
+                <div>
+
+                    <IconButton color="inherit">
+                        <Icon>notifications</Icon>
+                    </IconButton>
+
+                    <IconButton color="inherit">
+                        <Icon>account_circle</Icon>
+                    </IconButton>
+                </div>
+
             </Toolbar>
         </AppBar>
     )
